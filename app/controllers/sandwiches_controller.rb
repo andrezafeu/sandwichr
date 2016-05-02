@@ -1,5 +1,5 @@
 class SandwichesController < ApplicationController
-	
+
 	def index
 		sandwiches = Sandwich.all
 		render json: sandwiches
@@ -18,6 +18,16 @@ class SandwichesController < ApplicationController
 		end
 		render json: sandwich
 	end
+
+	def update
+		sandwich = Sandwich.find_by(id: params[:id])
+		if sandwich.nil?
+			render json: {error: "sandwich not found"}, status: 404
+		return
+		sandwich.update(sandwich_params)
+		render json: sandwich
+	end
+
 
 	private
 
