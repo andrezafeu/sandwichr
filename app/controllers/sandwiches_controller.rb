@@ -28,8 +28,27 @@ class SandwichesController < ApplicationController
 		render json: sandwich
 	end
 
+	def destroy
+		sandwich = Sandwich.find_by(id: params[:id])
+		if sandwich.nil?
+			render json: {error: "sandwich not found"}, status: 404
+		return
+		sandwich.destroy
+		render json: sandwich
+	end
+		
+	end
 
+	#anything not private is considered an action
 	private
+
+	def load_sandwich
+		sandwich = Sandwich.find_by(id: params[:id])
+		if sandwich.nil?
+			render json: {error: "sandwich not found"}, status: 404
+			return
+		end
+	end
 
 	def sandwich_params
 		params.require(:sandwich)
